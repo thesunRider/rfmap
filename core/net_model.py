@@ -1,12 +1,5 @@
-import sigmf
 import numpy as np
-import pandas as pd
-from sigmf import SigMFFile, sigmffile
-import os
-import glob,json
-import re,pickle
-
-import matplotlib.pyplot as plt
+import os,glob,json
 
 #importing the required libraries
 import tensorflow as tf
@@ -18,17 +11,6 @@ from tensorflow.keras.layers import Dropout,Input
 from tensorflow.keras.layers import Dense,BatchNormalization
 from tensorflow.keras import regularizers
 from numpy.fft import fft, ifft,fftshift,ifftshift
-
-from imblearn.over_sampling import SMOTE
-from scipy.stats import wasserstein_distance #this is EMD
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
-from scipy.stats import multivariate_normal
-from sklearn import preprocessing
-from sklearn.preprocessing import MinMaxScaler 
-from scipy.signal import butter,filtfilt
-from sklearn.model_selection import train_test_split
-from scipy import signal
 
 import logging
 import sys
@@ -53,8 +35,6 @@ class Netmodel:
 	model = None
 
 	def __init__():
-		#load configs and create model
-
 		#adding model convolution layer
 		self.model = Sequential()
 		self.model.add(Conv2D(50,(1,7),activation='relu',input_shape=(2,128,1)))
