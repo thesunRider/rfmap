@@ -1,7 +1,7 @@
 
 import logging
 import sys,json,re
-import time,glob,datetime
+import time,glob,datetime,os
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger()
@@ -16,7 +16,7 @@ def __getsave_model(model_id):
 	return os.path.abspath(config['weight_path']) +'/'+ str(model_id) +':'+ timestr +'.hd5'
 
 def __listsave_model(model_id):
-	return glob.glob(os.path.abspath(config['weight_path']) +'/'+str(model_id)+':*.hd5')
+	return glob.glob(os.path.abspath(config['weight_path']) +'/'+str(model_id)+':*.hd5.index')
 
 
 def __getlatest_model(model_id):

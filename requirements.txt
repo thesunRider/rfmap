@@ -1,0 +1,9 @@
+sigmf
+numpy
+pandas
+matplotlib
+tensorflow
+imbalanced-learn
+scipy
+scikit-learn
+h5py

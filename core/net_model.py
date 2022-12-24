@@ -62,7 +62,7 @@ class Netmodel:
 	def predict(x_pred):
 		return model.predict(x_pred)
 
-	def train_model(x_train,y_train,x_test,x_test,save_weights=False,**kwargs):
+	def train_model(x_train,y_train,x_test,y_test,save_weights=False,**kwargs):
 		#fitting the model
 		self.model.fit(x_train,y_train,epochs=5,validation_data=(x_test, x_test),)
 		if save_weights:
