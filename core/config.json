@@ -1,1 +1,5 @@
-{"weight_path":"/root/projects/sr/rfmap/core/weights/","model_location":"/root/projects/sr/rfmap/core/","implemented_models":[232313123]}
+{
+   "weight_path":"D:\\design_works\\hackathons\\sainya_ranakshetram\\rfmap\\rfmap\\core\\weights\\",
+   "model_location":"D:\\design_works\\hackathons\\sainya_ranakshetram\\rfmap\\rfmap\\core\\",
+   "implemented_models": 232313123
+}

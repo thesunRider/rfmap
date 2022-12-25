@@ -11,27 +11,27 @@ config_file = 'config.json'
 config_file_handle = open(config_file)
 config = json.load(config_file_handle)
 
-def __getsave_model(model_id):
+def core__getsave_model(model_id):
 	timestr = time.strftime("%Y%m%d-%H%M%S")
-	return os.path.abspath(config['weight_path']) +'/'+ str(model_id) +':'+ timestr +'.hd5'
+	return config['weight_path'] + str(model_id) +'#'+ timestr +'.hd5'
 
-def __listsave_model(model_id):
-	return glob.glob(os.path.abspath(config['weight_path']) +'/'+str(model_id)+':*.hd5.index')
+def core__listsave_model(model_id):
+	return  [s[:-6]for s in glob.glob(config['weight_path'] + str(model_id)+'*.hd5.index')]
 
 
-def __getlatest_model(model_id):
-	file_list = __listsave_model(model_id)
+def core__getlatest_model(model_id):
+	file_list = glob.glob(config['weight_path'] + str(model_id)+'*.hd5.index') #__listsave_model(model_id)
 	date_ary = []
 	for x in file_list:
-		file_stamp = ____extract_timestamp(x)
+		file_stamp = core____extract_timestamp(x)
 		date_ary.append(datetime.datetime.strptime(file_stamp, "%Y%m%d-%H%M%S"))
 
 	assert date_ary #if no model file was found then raise assertion error
-	return os.path.abspath(config['weight_path']) +'/'+ str(model_id) +':'+ str(sorted(date_ary)[-1].strftime("%Y%m%d-%H%M%S"))+'.hd5'
+	return config['weight_path'] + str(model_id) +'#'+ str(sorted(date_ary)[-1].strftime("%Y%m%d-%H%M%S"))+'.hd5'
 
 
-def ____extract_timestamp(filename):
-    return re.findall(re.escape(':')+"(.*)"+re.escape('.hd5'),filename)[0]
+def core____extract_timestamp(filename):
+    return re.findall(re.escape('#')+"(.*)"+re.escape('.hd5'),filename)[0]
 
 
 
