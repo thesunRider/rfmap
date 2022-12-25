@@ -64,10 +64,12 @@ class Model1:
 	def predict(self,x_pred):
 		return self.model.predict(_reshapedata(x_pred))
 
-	#HERE the input data needs to be in new shape
-	def train_model(self,x_train,y_train,x_test,y_test):
-		#fitting the model
-		self.model.fit(x_train,y_train,epochs=5,validation_data=(x_test, x_test))
+	#Train model, x_in = [ [<device1 iq stream>] , [<device2 iq stream>] ...] , y_in = [dev1_label,dev2_label ....]
+	def train_model(self,x_in,y_in,x_test_in,y_test_in):
+		x_train,y_train = _reshapefortrain(x_in,y_in)
+		x_test,y_test = _reshapefortrain(x_test_in,y_test_in)
+
+		self.model.fit(x_train,y_train,epochs=5,validation_data=(x_test, y_test))
 	
 	def save_weights():
 		save_file = core.core__getsave_model(self.model_id)
@@ -92,6 +94,18 @@ class Model1:
 
 	def get_model(self):
 		return (self.model_descriptor,self.model)
+
+	def _reshapefortrain(self,x_data,y_data):
+		data_ary_x = np.array([])
+		data_ary_y = np.array([])
+		#fitting the model
+		for x in range(0,x_data.shape[0]):
+			data_x = _reshapedata(np.array(x_data[x]))
+			data_y = np.repeat(y_data[x],len(data_x))
+			data_ary_x = np.append(data_ary_x,data_x)
+			data_ary_y = np.append(data_ary_y,data_y)
+
+		return (data_ary_x,data_ary_y)
 
 	def _reshapedata(self,data_in):
 		data_blnc = pd.DataFrame({'real':data_in.real,'img':data_in.imag,'blnc':np.repeat(0,len(data_in.real))})
