@@ -1,2 +1,0 @@
-def myfunc():
-	print("hi")

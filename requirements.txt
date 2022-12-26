@@ -7,3 +7,4 @@ imbalanced-learn
 scipy
 scikit-learn
 h5py
+sv-ttk
