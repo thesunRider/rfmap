@@ -19,7 +19,7 @@ from rfmap.core import core
 
 capture_figure = None
 capture_canvas=None
-current_workspace = {"id":None,'iq_data':np.array([]),'label':None,'signal':None,'sample_rate':0,'sample_count':0,'sample_duration':0,'sample_frequency':0,'timestamp':None,'add_data':{}}
+current_workspace = {"id":None,'iq_data':np.array([]),'label':None,'signal':None,'sample_rate':0,'sample_count':0,'sample_duration':0,'sample_frequency':0,'timestamp':None,'add_data':{},"saved":0}
 
 def disableChildren(parent):
 	for child in parent.winfo_children():
@@ -132,14 +132,54 @@ def save_current_workspace():
 	current_workspace["sample_duration"] = app.input_signal_duration.get()
 	current_workspace["signal_frequency"] = app.input_centre_frequency.get()
 	current_workspace["label"] = app.input_signal_label.get()
+	current_workspace["saved"] = 1
 	core.core_savecapture(current_workspace)
 	messagebox.showinfo("showinfo", "Saved and Loaded as Current Capture :" +current_workspace["label"] +" \n You can view the capture from Database section" )
 
+def tab_changed(event):
+	global selected_db_tag
+	if app.main_tab.index(app.main_tab.select()) == 1:
+		populate_db_treeview()
+	else:
+		selected_db_tag = None
 
-def clear_db_treeview():
+
+def populate_properties(event):
+	global selected_db_tag
+	app.tree_properties.delete(*app.tree_properties.get_children())
+	selection = app.tree_db.selection()
+	tag = app.tree_db.item(selection)['tags']
+	if tag:
+		id_in = tag[0]
+		all_id_details = core.core_getcapture(id_in)
+		if all_id_details:
+			selected_db_tag = id_in
+
+		for key, value in all_id_details.items():
+			app.tree_properties.insert('', tk.END, values=(key,value))
+
+
 
 def populate_db_treeview():
-	core.core_getcaptures()	
+	app.tree_db.delete(*app.tree_db.get_children())
+
+	app.tree_db.insert('', tk.END, text='Captures', iid=0, open=False)
+	app.tree_db.insert('', tk.END, text='Models', iid=1, open=False)
+
+
+	core_cap = core.core_getcaptures()
+	for count,x in enumerate(core_cap["captures"]):
+		app.tree_db.insert('', tk.END, text=x["label"], iid=count+2, open=False,tags=x["id"])
+		app.tree_db.move(count+2, 0, count)
+
+def load_to_workspace():
+	global current_workspace
+	if selected_db_tag:
+		current_workspace = core.core_load_capture(selected_db_tag)
+		app.statusvar1.set("Loaded :" + current_workspace["label"])
+	else:
+		app.statusvar1.set("Select a DB to Load")
+
 
 app = gui.MainApp()
 
@@ -148,20 +188,28 @@ app.chck_record.trace('w',change_rcrd_state)
 app.button_load_file.configure(command=file_open_dialg)
 app.button_load_start.configure(command=file_loadiq_data)
 app.button_savetodb.configure(command=save_current_workspace)
+app.load_capture_active.configure(command=load_to_workspace)
+app.mainwindow.bind("<<NotebookTabChanged>>", tab_changed)
+app.tree_db.bind("<<TreeviewSelect>>",populate_properties)
+
+app.scroll_db_tree.configure(command=app.tree_db.yview)
+app.tree_db.configure(xscrollcommand=app.scroll_db_tree.set)
+
+app.scroll_properties.configure(command=app.tree_properties.yview)
+app.tree_properties.configure(xscrollcommand=app.scroll_properties.set)
+
+
+app.scroll_prop_x.configure(command=app.tree_properties.xview)
+app.tree_properties.configure(yscrollcommand=app.scroll_prop_x.set)
+
 
 #fill ui data
 app.chck_record.set('file')
 plot_psd_home()
+app.tree_properties['columns'] = ('prop_name','prop_value')
+app.tree_properties.heading('prop_name', text='Property Name')
+app.tree_properties.heading('prop_value', text='Property Value')
 
-app.tree_db.insert('', tk.END, text='Captures', iid=0, open=False)
-app.tree_db.insert('', tk.END, text='Models', iid=1, open=False)
-
-
-app.tree_db.insert('', tk.END, text='John Doe', iid=5, open=False)
-app.tree_db.insert('', tk.END, text='Jane Doe', iid=6, open=False)
-
-app.tree_db.move(5, 0, 0)
-app.tree_db.move(6, 0, 1)
 
 sv_ttk.set_theme("light")
 app.mainwindow.mainloop()

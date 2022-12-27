@@ -354,27 +354,147 @@
             <property name="text" translatable="yes">Database</property>
             <child>
               <object class="ttk.Frame" id="frame12">
-                <property name="height">200</property>
-                <property name="width">200</property>
                 <layout manager="pack">
+                  <property name="fill">both</property>
                   <property name="side">top</property>
                 </layout>
                 <child>
-                  <object class="ttk.Treeview" id="tree_db" named="True">
-                    <property name="selectmode">extended</property>
+                  <object class="ttk.Frame" id="frame20">
+                    <property name="height">200</property>
+                    <property name="width">200</property>
                     <layout manager="pack">
+                      <property name="expand">true</property>
                       <property name="fill">both</property>
-                      <property name="side">left</property>
+                      <property name="side">top</property>
                     </layout>
+                    <child>
+                      <object class="ttk.Frame" id="frame16">
+                        <layout manager="pack">
+                          <property name="fill">both</property>
+                          <property name="side">left</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Treeview" id="tree_db" named="True">
+                            <property name="selectmode">browse</property>
+                            <property name="show">tree</property>
+                            <layout manager="pack">
+                              <property name="expand">true</property>
+                              <property name="fill">both</property>
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Scrollbar" id="scroll_db_tree" named="True">
+                            <property name="orient">vertical</property>
+                            <layout manager="pack">
+                              <property name="fill">y</property>
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Frame" id="frame14">
+                        <layout manager="pack">
+                          <property name="expand">true</property>
+                          <property name="fill">both</property>
+                          <property name="side">left</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Scrollbar" id="scroll_properties" named="True">
+                            <property name="orient">vertical</property>
+                            <layout manager="pack">
+                              <property name="fill">y</property>
+                              <property name="side">right</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Treeview" id="tree_properties" named="True">
+                            <property name="selectmode">browse</property>
+                            <property name="show">headings</property>
+                            <layout manager="pack">
+                              <property name="expand">true</property>
+                              <property name="fill">both</property>
+                              <property name="side">top</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Scrollbar" id="scroll_prop_x" named="True">
+                            <property name="orient">horizontal</property>
+                            <layout manager="pack">
+                              <property name="fill">x</property>
+                              <property name="side">top</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Frame" id="frame15">
+                        <property name="height">200</property>
+                        <property name="width">200</property>
+                        <layout manager="pack">
+                          <property name="side">top</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Button" id="load_capture_active" named="True">
+                            <property name="text" translatable="yes">Load As Active</property>
+                            <layout manager="pack">
+                              <property name="fill">x</property>
+                              <property name="padx">5</property>
+                              <property name="pady">5</property>
+                              <property name="side">top</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Button" id="button25">
+                            <property name="text" translatable="yes">Delete</property>
+                            <layout manager="pack">
+                              <property name="fill">x</property>
+                              <property name="padx">5</property>
+                              <property name="pady">5</property>
+                              <property name="side">top</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Button" id="start_analysis" named="True">
+                            <property name="text" translatable="yes">Analyze</property>
+                            <layout manager="pack">
+                              <property name="fill">x</property>
+                              <property name="padx">5</property>
+                              <property name="pady">5</property>
+                              <property name="side">top</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
                   </object>
                 </child>
                 <child>
-                  <object class="ttk.Scrollbar" id="scrollbar7">
-                    <property name="orient">vertical</property>
+                  <object class="ttk.Frame" id="frame22">
+                    <property name="height">200</property>
+                    <property name="width">200</property>
                     <layout manager="pack">
-                      <property name="fill">y</property>
-                      <property name="side">left</property>
+                      <property name="expand">true</property>
+                      <property name="fill">both</property>
+                      <property name="side">top</property>
                     </layout>
+                    <child>
+                      <object class="ttk.Scrollbar" id="scrollbar16">
+                        <property name="orient">vertical</property>
+                        <layout manager="pack">
+                          <property name="fill">y</property>
+                          <property name="side">right</property>
+                        </layout>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
@@ -386,6 +506,35 @@
             <property name="compound">top</property>
             <property name="state">normal</property>
             <property name="text" translatable="yes">Analyze</property>
+            <child>
+              <object class="ttk.Frame" id="frame23">
+                <property name="height">200</property>
+                <property name="width">200</property>
+                <layout manager="pack">
+                  <property name="side">top</property>
+                </layout>
+                <child>
+                  <object class="ttk.Treeview" id="treeview10">
+                    <property name="selectmode">extended</property>
+                    <layout manager="pack">
+                      <property name="fill">y</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Button" id="button32">
+                    <property name="text" translatable="yes">Load Weight</property>
+                    <layout manager="pack">
+                      <property name="anchor">ne</property>
+                      <property name="padx">10</property>
+                      <property name="pady">10</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
           </object>
         </child>
         <child>
@@ -402,6 +551,18 @@
             <property name="text" translatable="yes">Settings</property>
           </object>
         </child>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Label" id="label14">
+        <property name="relief">sunken</property>
+        <property name="text" translatable="yes">No Data Active</property>
+        <property name="textvariable">string:statusvar1</property>
+        <layout manager="pack">
+          <property name="expand">false</property>
+          <property name="fill">x</property>
+          <property name="side">bottom</property>
+        </layout>
       </object>
     </child>
   </object>

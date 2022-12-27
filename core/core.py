@@ -15,6 +15,10 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
+def core_listavailable_models():
+	return glob.glob(join(os.getcwd(),"models","model_*","descriptor.json"))
+
+
 def core__getsave_model(model_id):
 	timestr = time.strftime("%Y%m%d-%H%M%S")
 	return os.path.join(models_dir,"model_"+str(model_id),"weights", str(model_id) +'#'+ timestr +'.hd5')
@@ -55,8 +59,25 @@ def core_savecapture(workspace):
 
 	np.savez_compressed(join(captures_dir,file_save_format),signal_sample)
 
+def core_load_capture(id_in):
+	data_ret = core_getcapture(id_in)
+	assert data_ret
+	data_ret["saved"] = 1
+	return data_ret
+
 def core_getcaptures():
 	f = open(capture_config_file)
 	loaded_captures = json.loads(f.read())
 	f.close()
 	return loaded_captures
+
+def core_getcapture(id_in):
+	all_captures = core_getcaptures()
+	for x in all_captures["captures"]:
+		if x["id"] == id_in:
+			if x["add_data"]:
+				x.update(x["add_data"])
+			else:
+				x.pop("add_data")
+
+			return x 
