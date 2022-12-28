@@ -1,39 +1,16 @@
 {
     "captures": [
-    {
-        "id": "cbd44d01-d1fd-4e79-8419-5a6090df1f61",
-        "label": "Demod_WiFi_cable_X310_3123D76_IQ#1_run1",
-        "sample_rate": "5000000.0",
-        "sample_count": 4393920.0,
-        "sample_duration": "0.878784",
-        "sample_frequency": null,
-        "timestamp": "20221227-010131",
-        "add_data": null,
-        "signal_frequency": "2450000000",
-        "saved":1
-    },
-    {
-        "id": "c37384dc-8ed6-4e88-90d0-1d6be9af6dbd",
-        "label": "Demod_WiFi_cable_X310_3123D76_IQ#25_run1",
-        "sample_rate": "5000000.0",
-        "sample_count": 3554880.0000000005,
-        "sample_duration": "0.710976",
-        "sample_frequency": null,
-        "timestamp": "20221227-132143",
-        "add_data": null,
-        "signal_frequency": "2450000000",
-        "saved":1
-    },
-    {
-        "id": "b29a9be3-1054-4778-be52-d5c020248a0f",
-        "label": "Demod_WiFi_cable_X310_3123D76_IQ#17_run1",
-        "sample_rate": "5000000.0",
-        "sample_count": 3433440.0,
-        "sample_duration": "0.686688",
-        "sample_frequency": null,
-        "timestamp": "20221227-232550",
-        "add_data": null,
-        "signal_frequency": "2450000000",
-        "saved":1
-    }]
+        {
+            "id": "d2ebe24c-63a1-4500-a5f7-a0c889ead6b0",
+            "label": "Demod_WiFi_cable_X310_3123D76_IQ#13_run1",
+            "sample_rate": 5000000,
+            "sample_count": 5000000.0,
+            "sample_duration": 1,
+            "sample_frequency": null,
+            "timestamp": "20221228-214034",
+            "add_data": null,
+            "saved": 1,
+            "signal_frequency": 2450000000
+        }
+    ]
 }

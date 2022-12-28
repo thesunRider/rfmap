@@ -1,6 +1,6 @@
 
 import logging
-import sys,json,re
+import sys,json,re,uuid
 import time,glob,datetime,os
 from os.path import dirname,abspath,join
 import numpy as np
@@ -15,27 +15,84 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
+def core_getmodel(model_id):
+	avail_models = core_listavailable_models()
+	for x in avail_models:
+		if x["model_id"] == model_id:
+			return x
+
+
 def core_listavailable_models():
-	return glob.glob(join(os.getcwd(),"models","model_*","descriptor.json"))
+	id_ary = []
+	jsons = glob.glob(join(models_dir,"model_*","descriptor.json"))
+	for x in jsons:
+		with open(x) as k:
+			read_data = json.loads(k.read())
+			id_ary.append(read_data)
+
+	return id_ary
 
 
-def core__getsave_model(model_id):
+def core__get_model_weight_json(model_id):
+	return join(models_dir,"model_"+str(model_id),"weights","config.json")
+
+def core_list_weight_dict(model_id):
+	weight_config_file = core__get_model_weight_json(model_id)
+	f = open(weight_config_file)
+	load_weights = json.loads(f.read())
+	f.close()
+	return load_weights["weights"]
+
+def file_name_from_weight(model_id,weight_id):
+	loaded_dict = weight_dict_from_weight(model_id,weight_id)
+	return os.path.join(models_dir,"model_"+str(model_id),"weights", str(weight_id) +'#'+ loaded_dict["timestamp"] +'.hd5')
+
+
+def weight_dict_from_weight(model_id,weight_id):
+	all_weights_model = core_list_weight_dict(model_id)
+	for x in all_weights_model:
+		if x["weight_id"] == weight_id:
+			return x
+
+def core__get_new_save_model(model_id):
+	weight_config_file = core__get_model_weight_json(model_id)
+	f = open(weight_config_file)
+	load_weights = json.loads(f.read())
+	uid_weight = str(uuid.uuid4())
 	timestr = time.strftime("%Y%m%d-%H%M%S")
-	return os.path.join(models_dir,"model_"+str(model_id),"weights", str(model_id) +'#'+ timestr +'.hd5')
+	new_weight = {"model_id":model_id,"weight_id":uid_weight,'timestamp': timestr,"y_label":[]}
+	load_weights['weights'].append(new_weight)
+	f.close()
+
+	with open(weight_config_file, "w") as jsonFile:
+		json.dump(load_weights, jsonFile)
+
+	return os.path.join(models_dir,"model_"+str(model_id),"weights", str(uid_weight) +'#'+ timestr +'.hd5')
 
 def core__listsave_model(model_id):
-	return  [s[:-6]for s in glob.glob( join(models_dir ,"model_"+str(model_id),"weights", str(model_id)+'*.hd5.index') )]
+	all_weights_model = core_list_weight_dict(model_id)
+	data_ary = []
+	for x in all_weights_model:
+		data_ary.append((x["timestamp"],x["weight_id"]))
+
+	return  data_ary
 
 
 def core__getlatest_model(model_id):
-	file_list = glob.glob( models_dir ,"model_"+str(model_id),"weights", str(model_id)+'*.hd5.index') 
+	all_weights_model = core_list_weight_dict(model_id)
 	date_ary = []
-	for x in file_list:
-		file_stamp = core____extract_timestamp(x)
-		date_ary.append(datetime.datetime.strptime(file_stamp, "%Y%m%d-%H%M%S"))
+	last_date = 0
+	cur_latest_element = None
+	for x in all_weights_model:
+		file_stamp = x["timestamp"]
+		cur_weight_date = datetime.datetime.strptime(file_stamp, "%Y%m%d-%H%M%S")
+		if cur_weight_date > last_date:
+			cur_latest_element = x
+			last_date = cur_weight_date
+
 
 	assert date_ary #if no model file was found then raise assertion error
-	return  join( models_dir ,"model_"+str(model_id),"weights", str(model_id) +'#'+ str(sorted(date_ary)[-1].strftime("%Y%m%d-%H%M%S"))+'.hd5') 
+	return  join( models_dir ,"model_"+str(model_id),"weights", str(cur_latest_element["weight_id"]) +'#'+ str(cur_latest_element["timestamp"])+'.hd5') 
 
 
 def core____extract_timestamp(filename):
@@ -57,7 +114,14 @@ def core_savecapture(workspace):
 		with open(capture_config_file, "w") as jsonFile:
 			json.dump(loaded_captures, jsonFile)
 
-	np.savez_compressed(join(captures_dir,file_save_format),signal_sample)
+	np.savez_compressed(join(captures_dir,file_save_format),signal_sample=signal_sample)
+
+
+def core_get_capture_data(id_in):
+	data_ret = core_getcapture(id_in)
+	file_in = glob.glob(join(captures_dir,data_ret["id"] + "_" + data_ret["label"] +"#*.npz"))
+	assert file_in
+	return np.load(file_in[0])["signal_sample"]
 
 def core_load_capture(id_in):
 	data_ret = core_getcapture(id_in)

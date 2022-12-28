@@ -248,7 +248,7 @@
                                 </child>
                                 <child>
                                   <object class="ttk.Entry" id="input_centrefrequency" named="True">
-                                    <property name="textvariable">string:input_centre_frequency</property>
+                                    <property name="textvariable">int:input_centre_frequency</property>
                                     <layout manager="grid">
                                       <property name="column">1</property>
                                       <property name="padx">5</property>
@@ -268,7 +268,7 @@
                                 </child>
                                 <child>
                                   <object class="ttk.Entry" id="input_samplerate" named="True">
-                                    <property name="textvariable">string:input_sample_rate</property>
+                                    <property name="textvariable">int:input_sample_rate</property>
                                     <layout manager="grid">
                                       <property name="column">1</property>
                                       <property name="row">1</property>
@@ -304,7 +304,7 @@
                                 </child>
                                 <child>
                                   <object class="ttk.Entry" id="entry6">
-                                    <property name="textvariable">string:input_signal_duration</property>
+                                    <property name="textvariable">int:input_signal_duration</property>
                                     <layout manager="grid">
                                       <property name="column">3</property>
                                       <property name="padx">5</property>
@@ -505,7 +505,7 @@
           <object class="ttk.Notebook.Tab" id="tab3_analyze" named="True">
             <property name="compound">top</property>
             <property name="state">normal</property>
-            <property name="text" translatable="yes">Analyze</property>
+            <property name="text" translatable="yes">Analyse</property>
             <child>
               <object class="ttk.Frame" id="frame23">
                 <property name="height">200</property>
@@ -514,23 +514,201 @@
                   <property name="side">top</property>
                 </layout>
                 <child>
-                  <object class="ttk.Treeview" id="treeview10">
-                    <property name="selectmode">extended</property>
+                  <object class="ttk.Frame" id="frame24">
+                    <property name="height">200</property>
+                    <property name="width">200</property>
                     <layout manager="pack">
-                      <property name="fill">y</property>
-                      <property name="side">left</property>
+                      <property name="fill">x</property>
+                      <property name="side">top</property>
                     </layout>
+                    <child>
+                      <object class="ttk.Treeview" id="tree_analyze" named="True">
+                        <property name="selectmode">extended</property>
+                        <property name="show">headings</property>
+                        <layout manager="pack">
+                          <property name="fill">y</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Treeview" id="tree_weights" named="True">
+                        <property name="selectmode">browse</property>
+                        <property name="show">headings</property>
+                        <layout manager="pack">
+                          <property name="fill">y</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Frame" id="frame27">
+                        <property name="height">200</property>
+                        <property name="width">200</property>
+                        <layout manager="pack">
+                          <property name="anchor">ne</property>
+                          <property name="side">left</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Frame" id="frame29">
+                            <property name="height">200</property>
+                            <property name="width">200</property>
+                            <layout manager="pack">
+                              <property name="side">top</property>
+                            </layout>
+                            <child>
+                              <object class="ttk.Button" id="load_weight" named="True">
+                                <property name="text" translatable="yes">Load Weight</property>
+                                <layout manager="pack">
+                                  <property name="padx">10</property>
+                                  <property name="pady">10</property>
+                                  <property name="side">left</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Button" id="analyse_start" named="True">
+                                <property name="text" translatable="yes">Analyse</property>
+                                <layout manager="pack">
+                                  <property name="side">left</property>
+                                </layout>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Labelframe" id="labelframe9">
+                            <property name="height">200</property>
+                            <property name="text" translatable="yes">Capture Parameters</property>
+                            <property name="width">200</property>
+                            <layout manager="pack">
+                              <property name="padx">5</property>
+                              <property name="side">top</property>
+                            </layout>
+                            <child>
+                              <object class="ttk.Label" id="label17">
+                                <property name="text" translatable="yes">Dataset name:</property>
+                                <layout manager="grid">
+                                  <property name="column">0</property>
+                                  <property name="padx">5</property>
+                                  <property name="pady">5</property>
+                                  <property name="row">0</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Label" id="label18">
+                                <property name="text" translatable="yes">None</property>
+                                <layout manager="grid">
+                                  <property name="column">1</property>
+                                  <property name="padx">5</property>
+                                  <property name="pady">5</property>
+                                  <property name="row">0</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Label" id="label19">
+                                <property name="text" translatable="yes">Data Start:</property>
+                                <layout manager="grid">
+                                  <property name="column">0</property>
+                                  <property name="padx">5</property>
+                                  <property name="pady">5</property>
+                                  <property name="row">1</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Entry" id="entry8">
+                                <property name="text" translatable="yes">0</property>
+                                <property name="textvariable">int:data_start</property>
+                                <layout manager="grid">
+                                  <property name="column">1</property>
+                                  <property name="row">1</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Label" id="label20">
+                                <property name="text" translatable="yes">Data End:</property>
+                                <layout manager="grid">
+                                  <property name="column">0</property>
+                                  <property name="row">2</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Entry" id="entry9">
+                                <property name="text" translatable="yes">-1</property>
+                                <property name="textvariable">int:data_end</property>
+                                <layout manager="grid">
+                                  <property name="column">1</property>
+                                  <property name="padx">5</property>
+                                  <property name="pady">5</property>
+                                  <property name="row">2</property>
+                                </layout>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
                   </object>
                 </child>
                 <child>
-                  <object class="ttk.Button" id="button32">
-                    <property name="text" translatable="yes">Load Weight</property>
+                  <object class="ttk.Frame" id="frame25">
+                    <property name="height">200</property>
+                    <property name="width">200</property>
                     <layout manager="pack">
-                      <property name="anchor">ne</property>
-                      <property name="padx">10</property>
-                      <property name="pady">10</property>
-                      <property name="side">left</property>
+                      <property name="fill">x</property>
+                      <property name="side">top</property>
                     </layout>
+                    <child>
+                      <object class="tk.Text" id="text2">
+                        <property name="height">10</property>
+                        <property name="width">50</property>
+                        <layout manager="pack">
+                          <property name="fill">both</property>
+                          <property name="side">top</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Frame" id="frame26">
+                    <property name="height">200</property>
+                    <property name="width">200</property>
+                    <layout manager="pack">
+                      <property name="pady">5</property>
+                      <property name="side">bottom</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Label" id="label21">
+                        <property name="text" translatable="yes">Fingerprint: </property>
+                        <layout manager="pack">
+                          <property name="pady">0</property>
+                          <property name="side">top</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Entry" id="fingerprint_input" named="True">
+                        <layout manager="pack">
+                          <property name="pady">0</property>
+                          <property name="side">top</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="save_fingerprint" named="True">
+                        <property name="text" translatable="yes">Save Fingerprint to Capture</property>
+                        <layout manager="pack">
+                          <property name="pady">10</property>
+                          <property name="side">top</property>
+                        </layout>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>

@@ -13,12 +13,18 @@ NavigationToolbar2Tk)
 import matplotlib.pyplot as plt
 import uuid
 from tkinter import messagebox
+import importlib
 
 sys.path.insert(1,os.path.dirname(os.path.abspath('..')))
 from rfmap.core import core
 
+selected_model_tag = None
+selected_db_tag = None
+selected_weight_tag = None
+
 capture_figure = None
-capture_canvas=None
+capture_canvas = None
+
 current_workspace = {"id":None,'iq_data':np.array([]),'label':None,'signal':None,'sample_rate':0,'sample_count':0,'sample_duration':0,'sample_frequency':0,'timestamp':None,'add_data':{},"saved":0}
 
 def disableChildren(parent):
@@ -84,6 +90,7 @@ def file_loadiq_data():
 	global current_workspace,capture_plot
 	filename = app.input_path_text.get()
 	current_workspace["signal"] = sigmffile.fromfile(filename)
+	current_workspace["saved"] = 0
 
 	signal = current_workspace["signal"]
 	sample_rate = signal.get_global_field(SigMFFile.SAMPLE_RATE_KEY)
@@ -143,6 +150,34 @@ def tab_changed(event):
 	else:
 		selected_db_tag = None
 
+	if app.main_tab.index(app.main_tab.select()) == 2:
+		populate_analysis_models()
+	else:
+		selected_model_tag = None
+
+def populate_weights(event):
+	global selected_model_tag
+	app.tree_weights.delete(*app.tree_weights.get_children())
+	selection = app.tree_analyze.selection()
+	tag = app.tree_analyze.item(selection)['tags']
+	if tag:
+		id_in = tag[0]
+		all_id_details = core.core__listsave_model(id_in)
+		if all_id_details:
+			selected_model_tag = id_in
+
+		for x in all_id_details:
+			data_timestamp = x[0]
+			app.tree_weights.insert('', tk.END, values=(data_timestamp,),tags=x[1])
+
+def populate_analysis_models():
+	app.tree_analyze.delete(*app.tree_analyze.get_children())
+	avail_models = core.core_listavailable_models()
+	for x in avail_models:
+		model_id = x['model_id']
+		model_name = x['shortname']
+		app.tree_analyze.insert('', tk.END, values=(model_name),tags=model_id)
+
 
 def populate_properties(event):
 	global selected_db_tag
@@ -180,6 +215,44 @@ def load_to_workspace():
 	else:
 		app.statusvar1.set("Select a DB to Load")
 
+def load_AI_weights():
+	global selected_weight_tag
+	selection = app.tree_weights.selection()
+	tag = app.tree_weights.item(selection)['tags']
+	if tag:
+		app.statusvar1.set("Weight Loaded")
+		selected_weight_tag = tag[0]
+
+def get_data():
+
+	if current_workspace["saved"] == 1:
+		loaded_data = core.core_get_capture_data(current_workspace["id"])
+		return loaded_data
+
+	if current_workspace["signal"] is not None:
+		loaded_data = current_workspace["signal"].read_samples().view(np.complex128).flatten()
+		return loaded_data
+
+
+def start_analysis():
+	assert selected_weight_tag
+	assert selected_model_tag
+
+	app.statusvar1.set("Please wait Loading data")
+	data_ary = get_data()
+	importing_module_name = "rfmap.core.models.model_" + str(selected_model_tag) + ".model_" + str(selected_model_tag)
+	app.statusvar1.set("Please wait Loading module")
+	imp = importlib.import_module(importing_module_name)
+	model = getattr(imp, "Model_AI")
+	model_ai = model()
+	model_ai.load_weight(core.file_name_from_weight(selected_model_tag,selected_weight_tag))
+
+	app.statusvar1.set("Starting analysis")
+	data_trimmed = data_ary[app.data_start.get():app.data_end.get()]
+	print(data_trimmed)
+	prediction_results = model_ai.predict(data_trimmed)
+	print(prediction_results)
+
 
 app = gui.MainApp()
 
@@ -189,8 +262,11 @@ app.button_load_file.configure(command=file_open_dialg)
 app.button_load_start.configure(command=file_loadiq_data)
 app.button_savetodb.configure(command=save_current_workspace)
 app.load_capture_active.configure(command=load_to_workspace)
+app.load_weight.configure(command=load_AI_weights)
+app.analyse_start.configure(command=start_analysis)
 app.mainwindow.bind("<<NotebookTabChanged>>", tab_changed)
 app.tree_db.bind("<<TreeviewSelect>>",populate_properties)
+app.tree_analyze.bind("<<TreeviewSelect>>",populate_weights)
 
 app.scroll_db_tree.configure(command=app.tree_db.yview)
 app.tree_db.configure(xscrollcommand=app.scroll_db_tree.set)
@@ -206,6 +282,13 @@ app.tree_properties.configure(yscrollcommand=app.scroll_prop_x.set)
 #fill ui data
 app.chck_record.set('file')
 plot_psd_home()
+
+app.tree_analyze['columns'] = ('model_name',)
+app.tree_analyze.heading('model_name', text='Model')
+
+app.tree_weights['columns'] = ('timestamp')
+app.tree_weights.heading('timestamp', text='Timestamp')
+
 app.tree_properties['columns'] = ('prop_name','prop_value')
 app.tree_properties.heading('prop_name', text='Property Name')
 app.tree_properties.heading('prop_value', text='Property Value')

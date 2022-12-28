@@ -1,7 +1,7 @@
 import numpy as np
 import os,glob,json
 
-import core
+from rfmap.core import core
 
 
 #importing the required libraries
@@ -14,9 +14,11 @@ from tensorflow.keras.layers import Dropout,Input
 from tensorflow.keras.layers import Dense,BatchNormalization
 from tensorflow.keras import regularizers
 from numpy.fft import fft, ifft,fftshift,ifftshift
+import pandas as pd
 
 import logging
 import sys
+from os.path import dirname,abspath,join
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger()
@@ -32,7 +34,7 @@ logger.setLevel(logging.DEBUG)
 		
 class Model_AI:
 	model_id = 232313123
-	model_descriptor_file = 'model_descriptor_' + str(model_id) +'.json'
+	model_descriptor_file = join(dirname(abspath(__file__)),'descriptor.json')
 	model_descriptor_handle = open(model_descriptor_file)
 	model_descriptor = json.load(model_descriptor_handle)
 	model = None
@@ -62,17 +64,26 @@ class Model_AI:
 
 	#_PREDICT IS RAW IQ DATA TIME SERIES ARRAY [1+1j,1+2j.....] 
 	def predict(self,x_pred):
-		return self.model.predict(_reshapedata(x_pred))
+		return self.model.predict(self._reshapedata(x_pred))
+
+
+	def getlabels(self,results):
+		prob_ary = np.array([])
+
+		for i in range(0,len(out)):
+			j = np.argmax(out[i])
+			pred_label = unique_labels[j]
+			print(sorted(unique_labels)[j])
 
 	#Train model, x_in = [ [<device1 iq stream>] , [<device2 iq stream>] ...] , y_in = [dev1_label,dev2_label ....]
 	def train_model(self,x_in,y_in,x_test_in,y_test_in):
-		x_train,y_train = _reshapefortrain(x_in,y_in)
-		x_test,y_test = _reshapefortrain(x_test_in,y_test_in)
+		x_train,y_train = self._reshapefortrain(x_in,y_in)
+		x_test,y_test = self._reshapefortrain(x_test_in,y_test_in)
 
 		self.model.fit(x_train,y_train,epochs=5,validation_data=(x_test, y_test))
 	
 	def save_weights():
-		save_file = core.core__getsave_model(self.model_id)
+		save_file = core.core__get_new_save_model(self.model_id)
 		logger.debug("Trained Model saved to :" + save_file)
 		self.model.save_weights(save_file)
 	
@@ -100,7 +111,7 @@ class Model_AI:
 		data_ary_y = np.array([])
 		#fitting the model
 		for x in range(0,x_data.shape[0]):
-			data_x = _reshapedata(np.array(x_data[x]))
+			data_x = self._reshapedata(np.array(x_data[x]))
 			data_y = np.repeat(y_data[x],len(data_x))
 			data_ary_x = np.append(data_ary_x,data_x)
 			data_ary_y = np.append(data_ary_y,data_y)
@@ -108,6 +119,7 @@ class Model_AI:
 		return (data_ary_x,data_ary_y)
 
 	def _reshapedata(self,data_in):
+		assert (len(data_in.real) > 130) # the number of inputs should be greater than the sample input length 128
 		data_blnc = pd.DataFrame({'real':data_in.real,'img':data_in.imag,'blnc':np.repeat(0,len(data_in.real))})
 		size_blnc = len(data_blnc)
 		rem = size_blnc%128
