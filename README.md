@@ -5,7 +5,7 @@
 
 <a href="" rel="noopener">
 
-<img src="icon.png" alt="Project logo"></a>
+<img src="https://github.com/thesunRider/rfmap/blob/master/icon.png?raw=true" alt="Project logo"></a>
 
 </p>
 
