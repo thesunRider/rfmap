@@ -28,7 +28,7 @@ The package is written modular so as to be able to add new AI 'plugins' into the
 
 ## 📝 Table of Contents
 
-- [Problem Statement](#problem_statement)
+- [Problem Statement](docs/Problem_Statement.md)
 
 - [Idea / Solution](#idea)
 
