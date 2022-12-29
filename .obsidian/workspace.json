@@ -1,0 +1,145 @@
+{
+  "main": {
+    "id": "025827b32464d1d1",
+    "type": "split",
+    "children": [
+      {
+        "id": "7491bc303f36b144",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "893bdfd4b060a02d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "README.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "cf8293ee1b8e7cf6",
+    "type": "split",
+    "children": [
+      {
+        "id": "ae27cbe3def445f5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "833e6537b8477677",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "c6a2120d89883c6c",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "54c4f85045e47388",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "16275a537aa00c39",
+    "type": "split",
+    "children": [
+      {
+        "id": "e6496d3908a78a62",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ab2b48f442eaf7ab",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "README.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "e9bdbca1cbdf157c",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "README.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "d450034d621af50e",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "ac12102a6ad61e97",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "README.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "893bdfd4b060a02d",
+  "lastOpenFiles": [
+    "LICENSE.md",
+    "README.md",
+    "contributors-shield.md"
+  ]
+}
