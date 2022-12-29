@@ -1,5 +1,8 @@
 
-![logo](icon.jpg)
+<p align="center">
+<a href="" rel="noopener">
+<img src="docs/icon.jpg" alt="Project logo"></a>
+</p>
 
 <h1 align="center">RFMap</h1>
 
