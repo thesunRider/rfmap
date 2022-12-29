@@ -54,6 +54,9 @@ def weight_dict_from_weight(model_id,weight_id):
 		if x["weight_id"] == weight_id:
 			return x
 
+def core_getlabels(model_id, model_weight_id):
+	return weight_dict_from_weight(model_id, model_weight_id)["y_label"]
+
 def core__get_new_save_model(model_id):
 	weight_config_file = core__get_model_weight_json(model_id)
 	f = open(weight_config_file)
@@ -77,6 +80,19 @@ def core__listsave_model(model_id):
 
 	return  data_ary
 
+def core_savefingerpint(capture_id,model_id,weight_id,fingerprint):
+	all_captures = core_getcaptures()
+	for x in range(0,len(all_captures['captures'])):
+		if all_captures['captures'][x]["id"] == capture_id:
+			if all_captures['captures'][x]["add_data"] is None:
+				all_captures['captures'][x]["add_data"] = {}
+
+			all_captures['captures'][x]["add_data"].update({'model_analysed':core_getmodel(model_id)["shortname"],"weight_used":weight_dict_from_weight(model_id,weight_id)["timestamp"],"fingerprint":fingerprint})
+
+	with open(capture_config_file, "w") as jsonFile:
+			json.dump(all_captures, jsonFile)
+
+
 
 def core__getlatest_model(model_id):
 	all_weights_model = core_list_weight_dict(model_id)
@@ -94,6 +110,17 @@ def core__getlatest_model(model_id):
 	assert date_ary #if no model file was found then raise assertion error
 	return  join( models_dir ,"model_"+str(model_id),"weights", str(cur_latest_element["weight_id"]) +'#'+ str(cur_latest_element["timestamp"])+'.hd5') 
 
+def core_generatefingerprint(results):
+	results = np.array(results)
+	values = np.array([])
+
+	for i in range(0,results.shape[1]):
+		values = np.append(values,[results[:, i].mean()])
+
+	values = np.round(values*100,-1).astype(int)
+	total = "".join([hex(x)[2:].zfill(2) for x in values])
+	
+	return total 
 
 def core____extract_timestamp(filename):
     return re.findall(re.escape('#')+"(.*)"+re.escape('.hd5'),filename)[0]
@@ -141,6 +168,7 @@ def core_getcapture(id_in):
 		if x["id"] == id_in:
 			if x["add_data"]:
 				x.update(x["add_data"])
+				x.pop("add_data")
 			else:
 				x.pop("add_data")
 

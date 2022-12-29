@@ -656,23 +656,13 @@
                   </object>
                 </child>
                 <child>
-                  <object class="ttk.Frame" id="frame25">
+                  <object class="ttk.Frame" id="predict_chart" named="True">
                     <property name="height">200</property>
                     <property name="width">200</property>
                     <layout manager="pack">
                       <property name="fill">x</property>
                       <property name="side">top</property>
                     </layout>
-                    <child>
-                      <object class="tk.Text" id="text2">
-                        <property name="height">10</property>
-                        <property name="width">50</property>
-                        <layout manager="pack">
-                          <property name="fill">both</property>
-                          <property name="side">top</property>
-                        </layout>
-                      </object>
-                    </child>
                   </object>
                 </child>
                 <child>
@@ -694,6 +684,7 @@
                     </child>
                     <child>
                       <object class="ttk.Entry" id="fingerprint_input" named="True">
+                        <property name="textvariable">string:finger_string</property>
                         <layout manager="pack">
                           <property name="pady">0</property>
                           <property name="side">top</property>

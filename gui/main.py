@@ -24,6 +24,12 @@ selected_weight_tag = None
 
 capture_figure = None
 capture_canvas = None
+capture_plot = None
+
+analysis_axes = None
+analysis_figure = None 
+analysis_canvas = None
+analysis_plot = None
 
 current_workspace = {"id":None,'iq_data':np.array([]),'label':None,'signal':None,'sample_rate':0,'sample_count':0,'sample_duration':0,'sample_frequency':0,'timestamp':None,'add_data':{},"saved":0}
 
@@ -86,8 +92,36 @@ def plot_psd_home():#signal_sample,sampling_rate,signal_frequency):
 	toolbar.update()
 	capture_canvas.get_tk_widget().pack()
 
+
+def plot_bar_analysis():
+	global analysis_figure,analysis_plot,analysis_canvas,analysis_axes
+	 # the figure that will contain the plot
+	analysis_figure = Figure(
+				 dpi = 100,facecolor='#fafafa')
+
+
+	analysis_plot = analysis_figure.add_subplot(111)
+	analysis_canvas = FigureCanvasTkAgg(analysis_figure,
+							   master = app.predict_chart)  
+	analysis_canvas.draw()
+	analysis_canvas.get_tk_widget().pack(fill="both",side="top")
+
+	analysis_axes = analysis_figure.axes[0]
+
+	analysis_axes.set_xlabel("Identified Device")
+	analysis_axes.set_ylabel("Prediction Percentage (%)")
+	analysis_axes.set_ylim([0, 100])
+
+
+	toolbar = NavigationToolbar2Tk(analysis_canvas,
+								   app.predict_chart)
+	toolbar.update()
+	analysis_canvas.get_tk_widget().pack()
+
+
+
 def file_loadiq_data():
-	global current_workspace,capture_plot
+	global current_workspace,capture_plot,capture_canvas
 	filename = app.input_path_text.get()
 	current_workspace["signal"] = sigmffile.fromfile(filename)
 	current_workspace["saved"] = 0
@@ -233,8 +267,14 @@ def get_data():
 		loaded_data = current_workspace["signal"].read_samples().view(np.complex128).flatten()
 		return loaded_data
 
+def save_fingerprint():
+	assert current_workspace["saved"] == 1 # save the capture first
+	core.core_savefingerpint(current_workspace["id"],selected_model_tag,selected_weight_tag,app.finger_string.get())
+
+	app.statusvar1.set("Fingerprint saved to capture: " + current_workspace["id"])
 
 def start_analysis():
+	global analysis_plot,analysis_canvas,analysis_axes
 	assert selected_weight_tag
 	assert selected_model_tag
 
@@ -245,14 +285,25 @@ def start_analysis():
 	imp = importlib.import_module(importing_module_name)
 	model = getattr(imp, "Model_AI")
 	model_ai = model()
-	model_ai.load_weight(core.file_name_from_weight(selected_model_tag,selected_weight_tag))
+	model_ai.load_weight(selected_model_tag,selected_weight_tag)
 
-	app.statusvar1.set("Starting analysis")
+	app.statusvar1.set("Starting Analysis")
 	data_trimmed = data_ary[app.data_start.get():app.data_end.get()]
-	print(data_trimmed)
 	prediction_results = model_ai.predict(data_trimmed)
-	print(prediction_results)
+	labeled_results = model_ai.prediction_to_labels(prediction_results)
 
+	analysis_plot.clear()
+	analysis_plot.bar(list(labeled_results.keys()), (np.array(list(labeled_results.values()))*100).tolist(), color ='maroon',
+        width = 0.4)
+	analysis_axes.set_xlabel("Identified Device")
+	analysis_axes.set_ylabel("Prediction Percentage (%)")
+	analysis_axes.set_ylim([0, 100])
+	analysis_canvas.draw()
+
+	sys.modules.pop(importing_module_name)
+	app.statusvar1.set("Analysis Completed")
+	gen_finger = core.core_generatefingerprint(prediction_results)
+	app.finger_string.set(gen_finger)
 
 app = gui.MainApp()
 
@@ -264,6 +315,7 @@ app.button_savetodb.configure(command=save_current_workspace)
 app.load_capture_active.configure(command=load_to_workspace)
 app.load_weight.configure(command=load_AI_weights)
 app.analyse_start.configure(command=start_analysis)
+app.save_fingerprint.configure(command=save_fingerprint)
 app.mainwindow.bind("<<NotebookTabChanged>>", tab_changed)
 app.tree_db.bind("<<TreeviewSelect>>",populate_properties)
 app.tree_analyze.bind("<<TreeviewSelect>>",populate_weights)
@@ -282,6 +334,7 @@ app.tree_properties.configure(yscrollcommand=app.scroll_prop_x.set)
 #fill ui data
 app.chck_record.set('file')
 plot_psd_home()
+plot_bar_analysis()
 
 app.tree_analyze['columns'] = ('model_name',)
 app.tree_analyze.heading('model_name', text='Model')

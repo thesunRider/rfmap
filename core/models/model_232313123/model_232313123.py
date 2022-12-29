@@ -38,6 +38,7 @@ class Model_AI:
 	model_descriptor_handle = open(model_descriptor_file)
 	model_descriptor = json.load(model_descriptor_handle)
 	model = None
+	model_weight_id = None
 
 	def __init__(self):
 		#adding model convolution layer
@@ -67,13 +68,17 @@ class Model_AI:
 		return self.model.predict(self._reshapedata(x_pred))
 
 
-	def getlabels(self,results):
-		prob_ary = np.array([])
+	def prediction_to_labels(self,results):
+		all_labels = core.core_getlabels(self.model_id, self.model_weight_id)
+		all_labels = sorted(all_labels)
+		assert (len(all_labels) - results.shape[1] == 0)
 
-		for i in range(0,len(out)):
-			j = np.argmax(out[i])
-			pred_label = unique_labels[j]
-			print(sorted(unique_labels)[j])
+		prob_ary = {}
+		for i in range(0,len(all_labels)):
+			prob_ary.update({all_labels[i]:results[:, i].mean()})
+
+		return prob_ary
+
 
 	#Train model, x_in = [ [<device1 iq stream>] , [<device2 iq stream>] ...] , y_in = [dev1_label,dev2_label ....]
 	def train_model(self,x_in,y_in,x_test_in,y_test_in):
@@ -87,17 +92,15 @@ class Model_AI:
 		logger.debug("Trained Model saved to :" + save_file)
 		self.model.save_weights(save_file)
 	
-	def load_weight(self,weight_location=None):
-		#if none weight_location,load latest saved weight
-		if weight_location:
-			logger.debug("Loading: "+weight_location )
-			self.model.load_weights(weight_location)
-			logger.info(weight_location +" Loaded")
-		else:
-			latest_model = core.core__getlatest_model(self.model_id)
-			logger.debug("Loading: "+latest_model )
-			self.model.load_weights(latest_model)
-			logger.info(latest_model +" Loaded")
+	def load_weight(self,selected_model_tag,selected_weight_tag):
+		assert selected_weight_tag
+		assert selected_model_tag
+
+		self.model_weight_id =  selected_weight_tag
+		file_model_weight = core.file_name_from_weight(selected_model_tag,selected_weight_tag)
+		logger.debug("Loading: "+file_model_weight )
+		self.model.load_weights(file_model_weight)
+		logger.info(file_model_weight +" Loaded")
 
 	def list_saved_models(self):
 		val = core.core__listsave_model(self.model_id)
