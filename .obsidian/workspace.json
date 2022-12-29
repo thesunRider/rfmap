@@ -86,8 +86,8 @@
               "type": "backlink",
               "state": {
                 "file": "README.md",
-                "collapseAll": false,
-                "extraContext": false,
+                "collapseAll": true,
+                "extraContext": true,
                 "sortOrder": "alphabetical",
                 "showSearch": false,
                 "searchQuery": "",
@@ -133,17 +133,19 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "active": "ade4abd7419cb670",
   "lastOpenFiles": [
-    "docs/Problem_Statement.md",
+    "papers/oracle_similarity_based_rffinger_AI.pdf",
     "README.md",
+    "papers/iq_imbalance_using_autocorr.pdf",
+    "docs/Problem_Statement.md",
+    "docs/Contribution.md",
+    "docs/CONTRIBUTING.md",
     "docs/Problem.md",
     "docs/LICENSE.md",
     "Problem.md",
-    "docs/icon.jpg",
-    "contributors-shield.md"
+    "docs/icon.jpg"
   ]
 }

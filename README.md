@@ -19,10 +19,10 @@
 
 ---
 
-<p align="center"> Software helping in Fingerprinting RFSignal, the software works leveraging AI modules to classify and analyse RF (radio frequency) signals.
+<p align="center"> Software helping in Fingerprinting RF Signals, the software works leveraging modern AI methods to classify and analyse RF (Radio Frequency) signals.
 
 <br>
-The package is written modular so as to be able to add new AI 'plugins' into the package's classification methods.
+The package is written modular so as to be able to add new AI 'plugins' into the package's classification methods. All Research credits goes to the authors who created the implemented AI papers.
 
 </p>
 
@@ -42,7 +42,7 @@ The package is written modular so as to be able to add new AI 'plugins' into the
 
 - [Technology Stack](#tech_stack)
 
-- [Contributing](../CONTRIBUTING.md)
+- [Contributing](docs/Contribution.md)
 
 - [Authors](#authors)
 
@@ -50,25 +50,12 @@ The package is written modular so as to be able to add new AI 'plugins' into the
 
 ## 🧐 Problem Statement <a name = "problem_statement"></a>
 
-It is useful to design and follow a specific format when writing a problem statement. While there are several options
+Identifying from which device a signal originates is the key to authenticating wit the said device. In modern days the security measures implemented on the software layer are easily spoofed using various cyber profiling mechanics. All the techniques involved in recognizing the source device happens at the software layer,which can be manipulated by third party to create counterfeit devices. Thus a technology to recognize devices at a hardware level is required. The technology should be able to detect unique electronic hardware features of the source device and should be able to classify it accordingly.
 
-for doing this, the following is a simple and straightforward template often used in Business Analysis to maintain
+The Implemented software is able to classify and create hardware related fingerprints of device RF traffic from an existing group of pre recognized transmitters. 
 
-focus on defining the problem.
+RF Fingerprinting is the key to reducing the chances of counterfeit authentication of devices. This will help in creating secure communication channels.
 
-- IDEAL: This section is used to describe the desired or “to be” state of the process or product. At large, this section
-
-should illustrate what the expected environment would look like once the solution is implemented.
-
-- REALITY: This section is used to describe the current or “as is” state of the process or product.
-
-- CONSEQUENCES: This section is used to describe the impacts on the business if the problem is not fixed or improved upon.
-
-This includes costs associated with loss of money, time, productivity, competitive advantage, and so forth.
-
-Following this format will result in a workable document that can be used to understand the problem and elicit
-
-requirements that will lead to a winning solution.
 
 ## 💡 Idea / Solution <a name = "idea"></a>
 
@@ -138,28 +125,30 @@ until finished
 
 Add notes about how to use the system.
 
+## ✅ Tested on
+
+> Windows 10 Home ver: 10.0.19044 Build:19044
+> Kali Linux ver: 6.0.0.1-amd-64
+
+Tested as of 30-12-2022
+
 ## ⛏️ Built With <a name = "tech_stack"></a>
 
-- [MongoDB](https://www.mongodb.com/) - Database
-
-- [Express](https://expressjs.com/) - Server Framework
-
-- [VueJs](https://vuejs.org/) - Web Framework
-
-- [NodeJs](https://nodejs.org/en/) - Server Environment
+- [Tensorflow](https://www.tensorflow.org/) - AI
+- [Tkinter](https://docs.python.org/3/library/tkinter.html) - GUI Framework
+- [h5py](https://www.h5py.org/) - SDR API and HDF5 interface
 
 ## ✍️ Authors <a name = "authors"></a>
 
-- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
+- [@thesunRider](https://github.com/thesunRider) - Idea & Initial work
 
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors)
-
-who participated in this project.
 
 ## 🎉 Acknowledgments <a name = "acknowledgments"></a>
 
-- Hat tip to anyone whose code was used
+- [Aswin vishnu](https://www.instagram.com/vishnuaaswinam/) - AI models, Dataset filtering
 
-- Inspiration
-
-- References
+## 🎓 References
+-  [Radio Frequency Fingerprint Extraction of Radio Emitter Based on I/Q Imbalance](https://doi.org/10.1016/j.procs.2017.03.092)
+-  [ORACLE: Optimized Radio clAssification through Convolutional neuraL nEtworks](https://doi.org/10.1109/INFOCOM.2019.8737463)
+-  K. Sankhe, M. Belgiovine,F. Zhou, L. Angioloni, F. Restuccia, S. D’Oro, T. Melodia, S. Ioannidis, and K. R. Chowdhury, "No Radio Left Behind: Radio Fingerprinting Through Deep Learning of Physical-Layer Hardware Impairments,” IEEE Transactions on Cognitive Communications and Networking, Special Issue on Evolution of Cognitive Radio to AI-enabled Radio and Networks, 2019.
+- [Convolutional Radio Modulation RecognitionNetworks](https://arxiv.org/abs/1602.04105)
