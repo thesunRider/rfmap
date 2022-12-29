@@ -1,26 +1,15 @@
-# rfmap
 
+![logo](icon.jpg)
 
-<p align="center">
-
-<a href="" rel="noopener">
-
-<img src="https://github.com/thesunRider/rfmap/blob/master/icon.jpg?raw=true" alt="Project logo"></a>
-
-</p>
-
+<h1 align="center">RFMap</h1>
 
 
 <div align="center">
 
 [![Hackathon](https://img.shields.io/badge/hackathon-sainya_ranakshetram-orange.svg)](https://sainya-ranakshetram.in/)
-
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-
 [![GitHub Issues](https://img.shields.io/github/issues/thesunRider/rfmap.svg)](https://github.com/thesunRider/rfmap/issues)
-
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/thesunRider/rfmap.svg)](https://github.com/thesunRider/rfmap/pulls)
-
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 
 </div>
