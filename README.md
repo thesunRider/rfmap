@@ -1,7 +1,7 @@
 
 <p align="center">
 <a href="" rel="noopener">
-<img src="/docs/icon.jpg" alt="Project logo"></a>
+<a href="https://ibb.co/wWpqpCK"><img src="https://i.ibb.co/YkfSf8t/icon.jpg" alt="icon" border="0"></a>
 </p>
 
 <h1 align="center">RFMap</h1>
