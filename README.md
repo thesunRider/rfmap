@@ -148,11 +148,11 @@ python3 main.py
 ```
 
 
-![[1.png]]
-![[2.png]]
-![[3.png]]
-![[4.png]]
-![[5.png]]
+![1.png](docs/example_workflow/1.png)
+![2.png](docs/example_workflow/2.png)
+![3.png](docs/example_workflow/3.png)
+![4.png](docs/example_workflow/4.png)
+![5.png](docs/example_workflow/5.png)
 
 ## ✅ Tested on
 
