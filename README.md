@@ -48,7 +48,8 @@ The package is written modular so as to be able to add new AI 'plugins' into the
 
 - [Acknowledgments](#acknowledgments)
 
-Please goto [github link](https://github.com/thesunRider/rfmap) for latest releases, or to raise installation/usage issues
+### RECOMMENDED
+It is better to clone [github link](https://github.com/thesunRider/rfmap) for latest release,as this is not the bleeding edge repo, Please raise installation/usage issues at github.
 
 ## 🧐 Problem Statement <a name = "problem_statement"></a>
 
@@ -177,7 +178,7 @@ Tested as of 30-12-2022
 
 ## 🎉 Acknowledgments <a name = "acknowledgments"></a>
 
-- [Aswin vishnu](https://www.instagram.com/vishnuaaswinam/) - AI models, Dataset filtering
+- [Aswin vishnu](https://github.com/AswinVishnuA) - AI models, Dataset filtering
 
 ## 🎓 References
 -  [Radio Frequency Fingerprint Extraction of Radio Emitter Based on I/Q Imbalance](https://doi.org/10.1016/j.procs.2017.03.092)
