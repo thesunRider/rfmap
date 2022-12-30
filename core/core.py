@@ -5,6 +5,7 @@ import time,glob,datetime,os
 from os.path import dirname,abspath,join
 import numpy as np
 
+
 rf_map_dir = dirname(dirname(abspath(__file__)))
 models_dir = join(dirname(abspath(__file__)),"models")
 captures_dir = join(rf_map_dir,"captures")
@@ -14,6 +15,8 @@ capture_config_file = join(captures_dir,"config.json")
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
+
+
 
 def core_getmodel(model_id):
 	avail_models = core_listavailable_models()
@@ -161,6 +164,11 @@ def core_getcaptures():
 	loaded_captures = json.loads(f.read())
 	f.close()
 	return loaded_captures
+
+def core_iqdata_toreal(iq_data,freq_carrier,sample_rate):
+	sample_count = len(iq_data) 
+	time = np.linspace(0, sample_count / sample_rate, sample_count)
+	return iq_data.real * np.cos(2*np.pi*freq_carrier*time) -  iq_data.imag * np.sin(2*np.pi*freq_carrier*time)
 
 def core_getcapture(id_in):
 	all_captures = core_getcaptures()
