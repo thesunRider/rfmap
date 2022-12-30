@@ -289,6 +289,7 @@ def start_analysis():
 
 	app.statusvar1.set("Starting Analysis")
 	data_trimmed = data_ary[app.data_start.get():app.data_end.get()]
+
 	prediction_results = model_ai.predict(data_trimmed)
 	labeled_results = model_ai.prediction_to_labels(prediction_results)
 
