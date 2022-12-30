@@ -77,8 +77,11 @@ The Capture section is able to directly interface with SDR's (Software Defined R
 We have implemented 3 Classifier plugins for the package:
 
 1. [Similarity Based IQ CNN Classifier](docs/Model_Doc_1.md)
-2. SVM Based IQ Fingerprinting.
-3. CNN Based Modulation Recognition.
+		Here we compare similar IQ samples and fingerprint them based on their difference in phase
+2. SVM Based IQ Fingerprinting. (Has to Generate DOCS,please refer paper,Implemented) 
+		In this we extract the fingerprint of the transmitter by applying autocorrelation to the signal and generating a unique fingerprint of the signal.
+3. CNN Based Modulation Recognition. (Has to Generate DOCS,please refer paper,Implemented on application)
+		Similar to 1. We analyse the similarity of signals to determine in which modulation class does a new signal belong to.
 
 Please take a look at the notes of the Classifers to learn more.
 Each classifier is able to generate a unique fingerprint for a device under study, the fingerprint generation is as follows:
