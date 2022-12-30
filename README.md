@@ -32,7 +32,7 @@ The package is written modular so as to be able to add new AI 'plugins' into the
 
 - [Idea / Solution](#idea)
 
-- [Dependencies / Limitations](#limitations)
+- [Objectives](#objectives)
 
 - [Future Scope](#future_scope)
 
@@ -49,6 +49,8 @@ The package is written modular so as to be able to add new AI 'plugins' into the
 - [Acknowledgments](#acknowledgments)
 
 ## 🧐 Problem Statement <a name = "problem_statement"></a>
+
+Every radio signal transmission can be uniquely characterized due to randomness inmanufacturing process, origin and type of components etc. This process of radiofingerprinting is a process that identifies any other radio transmitter by the "fingerprint"that characterizes its signal transmission and is hard to imitate. An electronicfingerprint makes it possible to identify a wireless device by its radio transmissioncharacteristics. Radio fingerprinting is commonly used to prevent cloning.
 
 Identifying from which device a signal originates is the key to authenticating wit the said device. In modern days the security measures implemented on the software layer are easily spoofed using various cyber profiling mechanics. All the techniques involved in recognizing the source device happens at the software layer,which can be manipulated by third party to create counterfeit devices. Thus a technology to recognize devices at a hardware level is required. The technology should be able to detect unique electronic hardware features of the source device and should be able to classify it accordingly.
 
@@ -72,25 +74,39 @@ The Capture section is able to directly interface with SDR's (Software Defined R
 
 We have implemented 3 Classifier plugins for the package:
 
-1. [Similarity Based IQ CNN Classifier](Model_Doc_1.md).
+1. [Similarity Based IQ CNN Classifier](docs/Model_Doc_1.md)
 2. SVM Based IQ Fingerprinting.
 3. CNN Based Modulation Recognition.
 
 Please take a look at the notes of the Classifers to learn more.
+Each classifier is able to generate a unique fingerprint for a device under study, the fingerprint generation is as follows:
 
-## ⛓️ Dependencies / Limitations <a name = "limitations"></a>
+Suppose there are x labelled predictions of the classifier, a weighted hexadecimal shift of all the predicted possibilities rounded to the nearest one's position is generated.
 
-- What are the dependencies of your project?
+```
+ie. if the predicted probabilities are P = [1,53,25,18,3]
+Sum(P) = 100
+new_P = round P to nearest 5
+     -> new_P = [0,50,25,20,0]
+Convert Each element of P to hexadecimal and append the string together
+fingerprint_array = [0x0,0x32,0x19,0x14,0x00]
+We shift these bits in groups,thus the generated fingerprint is:
+fingerprint = 0032191400
+```
 
-- Describe each limitation in detailed but concise terms
+## ⛓️ Objectives <a name = "objectives"></a>
 
-- Explain why each limitation exists
+- [x] Create an Application that can identify and classify RF signals based on hardware imperfections < Problem Statement >
+- [x] Store Fingerprints in database with timestamp < Problem Statement >
+- [ ] Directly Interface application with SDR
+- [ ] Train classifiers within Application itself
+- [ ] Detailed passive Analysis on captured RF Signal
+- [ ] Implement Repeating Preamble Extractor
+- [ ] Combine Multiple classification Fingerprints into single unique fingerprint
+- [ ] GUI Improvements for 
+- [ ] Dockerise Application
 
-- Provide the reasons why each limitation could not be overcome using the method(s) chosen to acquire.
-
-- Assess the impact of each limitation in relation to the overall findings and conclusions of your project, and if
-
-appropriate, describe how these limitations could point to the need for further research.
+All the core problem statement needs have been implemented. Due to modular architecture additional features can be implemented easily.
 
 ## 🚀 Future Scope <a name = "future_scope"></a>
 
