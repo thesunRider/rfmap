@@ -48,6 +48,8 @@ The package is written modular so as to be able to add new AI 'plugins' into the
 
 - [Acknowledgments](#acknowledgments)
 
+Please goto [github link](https://github.com/thesunRider/rfmap) for latest releases, or to raise installation/usage issues
+
 ## 🧐 Problem Statement <a name = "problem_statement"></a>
 
 Every radio signal transmission can be uniquely characterized due to randomness inmanufacturing process, origin and type of components etc. This process of radiofingerprinting is a process that identifies any other radio transmitter by the "fingerprint"that characterizes its signal transmission and is hard to imitate. An electronicfingerprint makes it possible to identify a wireless device by its radio transmissioncharacteristics. Radio fingerprinting is commonly used to prevent cloning.
@@ -94,12 +96,17 @@ We shift these bits in groups,thus the generated fingerprint is:
 fingerprint = 0032191400
 ```
 
+For generating additional datasets , Earth Movers distance algorithm was employed to generate data with gaussian noise under a threshold.
+
 ## ⛓️ Objectives Achieved<a name = "objectives"></a>
 
 - [x] Create an Application that can identify and classify RF signals based on hardware imperfections < Problem Statement >
 - [x] Store Fingerprints in database with timestamp < Problem Statement >
 - [x] Load IQ samples from files
 - [x] Platform Independent GUI, and package Installation
+- [x] Implement CNN based IQ Classifier
+- [x] Implement CNN based Modulation Classifier
+- [ ] Implement SVM based IQ classifier (Implemented Jupiter Notebooks)
 
 All the core problem statement needs have been implemented.
 
@@ -129,6 +136,8 @@ pip3 install -r requirements.txt
 
 Since the app runs on Tkinter for GUI ,and the dependencies are platform independent ,the package can run cross platform.
 
+A GPU is required for the AI classifers.
+
 ## 🎈 Usage <a name="usage"></a>
 
 The package can be started by running:
@@ -138,6 +147,12 @@ cd gui/
 python3 main.py
 ```
 
+
+![[1.png]]
+![[2.png]]
+![[3.png]]
+![[4.png]]
+![[5.png]]
 
 ## ✅ Tested on
 
@@ -166,3 +181,4 @@ Tested as of 30-12-2022
 -  [ORACLE: Optimized Radio clAssification through Convolutional neuraL nEtworks](https://doi.org/10.1109/INFOCOM.2019.8737463)
 -  K. Sankhe, M. Belgiovine,F. Zhou, L. Angioloni, F. Restuccia, S. D’Oro, T. Melodia, S. Ioannidis, and K. R. Chowdhury, "No Radio Left Behind: Radio Fingerprinting Through Deep Learning of Physical-Layer Hardware Impairments,” IEEE Transactions on Cognitive Communications and Networking, Special Issue on Evolution of Cognitive Radio to AI-enabled Radio and Networks, 2019.
 - [Convolutional Radio Modulation RecognitionNetworks](https://arxiv.org/abs/1602.04105)
+- arXiv:2201.00680v3 [cs.LG] 6 Sep 2022

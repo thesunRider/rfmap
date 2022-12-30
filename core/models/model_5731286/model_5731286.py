@@ -9,6 +9,9 @@ from sklearn.preprocessing import normalize
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
 
+
+#importing the required libraries
+import tensorflow as tf
 from tensorflow.keras.layers import Conv2D, ZeroPadding2D
 from tensorflow.keras.layers import Reshape, Flatten, Dropout
 from tensorflow.keras.callbacks import EarlyStopping
@@ -36,7 +39,6 @@ from os.path import dirname,abspath,join
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
-
 
 class Model_AI:
 	model_id = 5731286
@@ -68,7 +70,7 @@ class Model_AI:
 		self.model.add(Reshape([output_var_number]))
 
 		#compiling the model
-		self.model.compile(loss='categorical_crossentropy', optimizer='adam', metrics = ['accuracy'])
+		self.model.compile(loss='categorical_crossentropy', optimizer=tf.keras.optimizers.legacy.Adam(), metrics = ['accuracy'])
 
 	#_PREDICT IS RAW IQ DATA TIME SERIES ARRAY [1+1j,1+2j.....] 
 	def predict(self,x_pred):

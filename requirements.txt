@@ -2,7 +2,7 @@ sigmf
 numpy
 pandas
 matplotlib
-tensorflow
+tensorflow-gpu
 imbalanced-learn
 scipy
 scikit-learn

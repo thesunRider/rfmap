@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/Model_Doc_1.md",
+                "file": "README.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/Model_Doc_1.md",
+                "file": "README.md",
                 "collapseAll": true,
                 "extraContext": true,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/Model_Doc_1.md",
+                "file": "README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/Model_Doc_1.md"
+                "file": "README.md"
               }
             }
           }
@@ -137,15 +137,15 @@
   },
   "active": "8fa9cf4e001ae117",
   "lastOpenFiles": [
-    "papers/oracle_similarity_based_rffinger_AI.pdf",
-    "docs/Model_Doc_1.md",
+    "docs/example_workflow/1.png",
     "README.md",
+    "docs/Model_Doc_1.md",
+    "papers/oracle_similarity_based_rffinger_AI.pdf",
+    "docs/Matrixes.png",
     "docs/Problem_Statement.md",
+    "docs/cnn_model_oracle_architecture.png",
     "papers/iq_imbalance_using_autocorr.pdf",
     "docs/Contribution.md",
-    "docs/CONTRIBUTING.md",
-    "docs/Problem.md",
-    "docs/LICENSE.md",
-    "Problem.md"
+    "docs/CONTRIBUTING.md"
   ]
 }
