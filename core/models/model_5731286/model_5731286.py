@@ -5,15 +5,28 @@ from rfmap.core import core
 
 
 #importing the required libraries
-import tensorflow as tf
+from sklearn.preprocessing import normalize 
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
+
+from tensorflow.keras.layers import Conv2D, ZeroPadding2D
+from tensorflow.keras.layers import Reshape, Flatten, Dropout
+from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv2D
-from tensorflow.keras.layers import MaxPool2D
-from tensorflow.keras.layers import Flatten
-from tensorflow.keras.layers import Dropout,Input
-from tensorflow.keras.layers import Dense,BatchNormalization
-from tensorflow.keras import regularizers
-from numpy.fft import fft, ifft,fftshift,ifftshift
+from tensorflow.keras.models import load_model
+from tensorflow.keras.layers import Dense
+from tensorflow.keras import metrics
+
+from pandas import DataFrame as df
+
+import matplotlib.pyplot as plt
+import tensorflow as tf
+import numpy as np
+
+import random
+import sys,gc
+
+
 import pandas as pd
 
 import logging
@@ -26,38 +39,36 @@ logger.setLevel(logging.DEBUG)
 
 
 class Model_AI:
-	model_id = 232313123
+	model_id = 5731286
 	model_descriptor_file = join(dirname(abspath(__file__)),'descriptor.json')
 	model_descriptor_handle = open(model_descriptor_file)
 	model_descriptor = json.load(model_descriptor_handle)
 	model = None
 	model_weight_id = None
-	model_output_number = 16
+	model_output_number = 10
 
-	def __init__(self,output_var_number = 16):
+	def __init__(self,output_var_number = 10):
 		self.model_output_number = output_var_number
 
 		#adding model convolution layer
+
+		dr = 0.5
 		self.model = Sequential()
-		self.model.add(Conv2D(50,(1,7),activation='relu',input_shape=(2,128,1)))
-		self.model.add(BatchNormalization())
-		self.model.add(MaxPool2D(pool_size=(2, 2),strides=1,padding="same"))
+		self.model.add(Reshape((1, 2, 128), input_shape = (2, 128)))
+		self.model.add(ZeroPadding2D((0, 2), data_format = 'channels_first'))
+		self.model.add(Conv2D(256, (1, 3), padding = 'valid', activation = "relu", name="conv1", kernel_initializer='glorot_uniform', data_format="channels_first"))
+		self.model.add(Dropout(dr))
+		self.model.add(ZeroPadding2D((0,2), data_format = 'channels_first'))
+		self.model.add(Conv2D(80, (2, 3), activation="relu", name="conv3", padding="valid", kernel_initializer="glorot_uniform", data_format="channels_first"))
+		self.model.add(Dropout(dr))
+		self.model.add(Flatten())   
+		self.model.add(Dense(256, activation="relu", name="dense1", kernel_initializer="he_normal"))
+		self.model.add(Dropout(dr))
+		self.model.add(Dense(10, name="dense3", kernel_initializer="he_normal", activation = 'softmax'))
+		self.model.add(Reshape([output_var_number]))
 
-		self.model.add(Conv2D(50,(2,7),activation='relu'))
-		self.model.add(BatchNormalization())
-		self.model.add(MaxPool2D(pool_size=(2, 2),strides=1,padding="same"))
-
-		self.model.add(Flatten())
-
-		self.model.add(Dense(256,kernel_regularizer=regularizers.L2(l2=1e-4) ))
-		self.model.add(Dropout(0.5))
-		self.model.add(Dense(80,kernel_regularizer=regularizers.L2(l2=1e-4) ))
-		self.model.add(Dropout(0.5))
-
-		#adding output layer
-		self.model.add(Dense(output_var_number,activation='softmax' ))
 		#compiling the model
-		self.model.compile(loss='sparse_categorical_crossentropy',optimizer=tf.keras.optimizers.legacy.Adam(learning_rate=1e-4),metrics=['accuracy'])
+		self.model.compile(loss='categorical_crossentropy', optimizer='adam', metrics = ['accuracy'])
 
 	#_PREDICT IS RAW IQ DATA TIME SERIES ARRAY [1+1j,1+2j.....] 
 	def predict(self,x_pred):

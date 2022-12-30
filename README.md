@@ -57,13 +57,26 @@ The Implemented software is able to classify and create hardware related fingerp
 RF Fingerprinting is the key to reducing the chances of counterfeit authentication of devices. This will help in creating secure communication channels.
 
 
-## 💡 Idea / Solution <a name = "idea"></a>
+## 💡 Idea and Implementation <a name = "idea"></a>
 
-This section is used to describe potential solutions.
+RF Fingerprintng was implemented by analysing hardware imperfections of the transmitter and classifying them, We were able to predict IQ imbalances of different transmitters with an accuracy of 92%. 
 
-Once the ideal, reality, and consequences sections have been
+Since the package was made to be modular (Plugin type architecture) three classifiers were added to the package to fingerprint transmitters. Adding further classifiers would be very easy due to the programming architecture.
 
-completed, and understood, it becomes easier to provide a solution for solving the problem.
+The application Itself consists of three sections:
+1. Capture
+2. Database
+3. Analysis
+
+The Capture section is able to directly interface with SDR's (Software Defined Radio) to gather IQ samples or can open IQ samples captured to sigmf-files. This captured data is saved to the package's database. This database of captures can be viewed and edited from the Database section,furthermore from here we load the data to the memory that we need to analyse. The Analysis section consists of all the Classifier plugins, here you give the starting and ending indexes of the data that you wanted to analyse. And the probabilities of prediction will appear as a bar chart on this section,based on the bar chart a unique fingerprint will be generated for the data under study.
+
+We have implemented 3 Classifier plugins for the package:
+
+1. [Similarity Based IQ CNN Classifier](Model_Doc_1.md).
+2. SVM Based IQ Fingerprinting.
+3. CNN Based Modulation Recognition.
+
+Please take a look at the notes of the Classifers to learn more.
 
 ## ⛓️ Dependencies / Limitations <a name = "limitations"></a>
 
@@ -87,43 +100,26 @@ in the future.
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
-These instructions will get you a copy of the project up and running on your local machine for development
-
-and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [Usage](#Usage) on how to start using the package.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them.
+The package requires Python 3.8.5 or above, For installing dependencies:
 
 ```
-
-Give examples
-
+pip3 install -r requirements.txt
 ```
 
-### Installing
-
-A step by step series of examples that tell you how to get a development env running.
-
-Say what the step will be
-
-```
-
-Give the example
-
-```
-
-And repeat
-
-```
-
-until finished
-
-```
+Since the app runs on Tkinter for GUI ,and the dependencies are platform independent ,the package can run cross platform.
 
 ## 🎈 Usage <a name="usage"></a>
 
-Add notes about how to use the system.
+The package can be started by running:
+
+```
+python3 main.py
+```
+
 
 ## ✅ Tested on
 
