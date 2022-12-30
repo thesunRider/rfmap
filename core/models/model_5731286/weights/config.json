@@ -1,3 +1,9 @@
 {
-    "weights": []
+    "weights": [{
+        "model_id": 5731286,
+        "weight_id": "k2ebs24c-93s1-8500-b577-k0s8d49odwb0",
+        "timestamp": "20221225-002951",
+        "y_label": ["8-PSK","AM-DSB","BPSK","CPFSK","GFSK","PAM-4","QAM-16","QAM-64","QPSK","WBFM"],
+        "input_size": [2, 128]
+    }]
 }

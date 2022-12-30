@@ -94,26 +94,27 @@ We shift these bits in groups,thus the generated fingerprint is:
 fingerprint = 0032191400
 ```
 
-## ⛓️ Objectives <a name = "objectives"></a>
+## ⛓️ Objectives Achieved<a name = "objectives"></a>
 
 - [x] Create an Application that can identify and classify RF signals based on hardware imperfections < Problem Statement >
 - [x] Store Fingerprints in database with timestamp < Problem Statement >
+- [x] Load IQ samples from files
+- [x] Platform Independent GUI, and package Installation
+
+All the core problem statement needs have been implemented.
+
+## 🚀 Future Scope <a name = "future_scope"></a>
+
 - [ ] Directly Interface application with SDR
 - [ ] Train classifiers within Application itself
 - [ ] Detailed passive Analysis on captured RF Signal
 - [ ] Implement Repeating Preamble Extractor
 - [ ] Combine Multiple classification Fingerprints into single unique fingerprint
-- [ ] GUI Improvements for 
+- [ ] GUI Improvements for Analysis progress monitoring
 - [ ] Dockerise Application
 
-All the core problem statement needs have been implemented. Due to modular architecture additional features can be implemented easily.
-
-## 🚀 Future Scope <a name = "future_scope"></a>
-
-Write about what you could not develop during the course of the Hackathon; and about what your project can achieve
-
-in the future.
-
+ Due to modular architecture additional features can be implemented easily.
+ 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [Usage](#Usage) on how to start using the package.
@@ -133,6 +134,7 @@ Since the app runs on Tkinter for GUI ,and the dependencies are platform indepen
 The package can be started by running:
 
 ```
+cd gui/
 python3 main.py
 ```
 

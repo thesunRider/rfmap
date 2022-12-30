@@ -15,7 +15,7 @@ import uuid
 from tkinter import messagebox
 import importlib
 
-sys.path.insert(1,os.path.dirname(os.path.abspath('..')))
+sys.path.insert(1,os.path.dirname(os.path.abspath(__file__)))
 from rfmap.core import core
 
 selected_model_tag = None

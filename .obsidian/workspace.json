@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "docs/Model_Doc_1.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "README.md",
+                "file": "docs/Model_Doc_1.md",
                 "collapseAll": true,
                 "extraContext": true,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "README.md",
+                "file": "docs/Model_Doc_1.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "README.md"
+                "file": "docs/Model_Doc_1.md"
               }
             }
           }
@@ -137,10 +137,10 @@
   },
   "active": "8fa9cf4e001ae117",
   "lastOpenFiles": [
-    "docs/Problem_Statement.md",
+    "papers/oracle_similarity_based_rffinger_AI.pdf",
     "docs/Model_Doc_1.md",
     "README.md",
-    "papers/oracle_similarity_based_rffinger_AI.pdf",
+    "docs/Problem_Statement.md",
     "papers/iq_imbalance_using_autocorr.pdf",
     "docs/Contribution.md",
     "docs/CONTRIBUTING.md",
